@@ -1,0 +1,87 @@
+---
+import { getCollection } from "astro:content";
+
+const LANG = "en";
+
+const metaData = await getCollection("docs", ({ id }) => {
+  return id.endsWith("index.md");
+});
+
+let folders = metaData.map((folder: any) => {
+  return {
+    id: folder.id.split("/").slice(0, -1).join("/"),
+    title: folder.data.title,
+    slug: `${LANG}/${folder.slug}`,
+    order: folder.data.order,
+  };
+});
+
+folders.sort((a, b) => a.order - b.order);
+
+const files = await getCollection("docs", ({ id }) => {
+  return !id.endsWith("index.md");
+});
+
+type Props = {
+  currentPage: string;
+};
+
+const { currentPage } = Astro.props;
+---
+
+<nav class="mt-10 lg:text-sm lg:leading-6 relative">
+  <ul
+    class="h-full overflow-x-visible overflow-y-auto max-h-screen last:pb-8 last:mb-24"
+  >
+    {
+      folders.map((folder: any) => (
+        <li class="mb-6 flex flex-col">
+          <nova-folder
+            data-message={folder.id}
+            class="font-bold cursor-pointer mb-2 text-lg select-none leading-6"
+          >
+            {folder.title}
+          </nova-folder>
+          <ul class="" id={`list-${folder.id}`}>
+            {files
+              .filter(
+                (doc: any) =>
+                  doc.id.startsWith(folder.id) && !doc.id.endsWith("index.md")
+              )
+              .sort((a, b) => a.data.order - b.data.order)
+              .map((file: any) => (
+                <li>
+                  <a
+                    href={`/${file.slug}`}
+                    class={`text-base p-1 pl-3 no-underline block hover:underline hover:text-gray-900 ${
+                      currentPage === "/" + file.slug
+                        ? "text-gray-900 border-gray-900 bg-gray-100"
+                        : "text-gray-600"
+                    } `}
+                  >
+                    {file.data.title}
+                  </a>
+                </li>
+              ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  class Folder extends HTMLElement {
+    connectedCallback() {
+      this.addEventListener("click", () => {
+        const listId = this.dataset.message;
+        const list = document.getElementById(`list-${listId}`);
+        if (list) {
+          list.style.display = list.style.display === "none" ? "block" : "none";
+        }
+      });
+    }
+  }
+  customElements.define("nova-folder", Folder);
+</script>
+

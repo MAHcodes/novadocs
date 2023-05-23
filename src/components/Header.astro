@@ -1,0 +1,25 @@
+---
+import { SITE } from "../consts";
+import { Icon } from "astro-icon";
+
+type Props = {
+  currentPage: string;
+};
+---
+
+<header class="max-w-8xl mx-auto">
+  <div
+    class="py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0"
+  >
+    <nav class="relative flex items-center" title="Top Navigation">
+      <a
+        class="mr-3 flex flex-row gap-2 w-[2.0625rem] overflow-hidden md:w-auto text-xl"
+        href="/"
+      >
+        <Icon class="w-8 h-8 cursor-pointer" name={"ph:planet-fill"} />
+        <h1>{SITE.title ?? "Documentation"}</h1>
+      </a>
+      <Icon class="w-8 h-8 cursor-pointer lg:hidden" name={"mdi:menu"} />
+    </nav>
+  </div>
+</header>

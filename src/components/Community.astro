@@ -1,0 +1,59 @@
+---
+import { Icon } from "astro-icon";
+const community = [
+  {
+    title: "GitHub",
+    icon: "mdi:github",
+    link: "https://twitter.com/hasuraHQ",
+  },
+  {
+    title: "Discord",
+    icon: "ic:baseline-discord",
+    link: "https://discord.gg/8KvA3JU",
+  },
+  {
+    title: "Twitter",
+    icon: "mdi:twitter",
+    link: "https://twitter.com/hasuraHQ",
+  },
+  {
+    title: "Nostr",
+    icon: "uil:message",
+    link: "https://discord.gg/8KvA3JU",
+  },
+  {
+    title: "YouTube",
+    icon: "mdi:youtube",
+    link: "https://discord.gg/8KvA3JU",
+  },
+  {
+    title: "Twitch",
+    icon: "mdi:twitch",
+    link: "https://discord.gg/8KvA3JU",
+  },
+];
+---
+
+<div>
+  <h2 class="font-bold cursor-pointer mb-2 text-lg select-none leading-6">
+    Community
+  </h2>
+
+  <ul>
+    {
+      community.map((item) => (
+        <li class="flex gap-2 items-center">
+          <a
+            href={item.link}
+            class="pl-4 space-x-reverse transition border-l-4 duration-200 ease-out pt-1 pb-1 leading-5 text-theme-text-lighter no-underline bidi-override text-base w-full inline-flex gap-2 text-gray-600 hover:text-gray-900 hover:underline"
+          >
+            <div class="flex gap-2 items-center">
+              <Icon class="w-4 h-4 cursor-pointer" name={item.icon} />
+              {item.title}
+            </div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
