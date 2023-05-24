@@ -75,7 +75,9 @@ export default function Search(props: any) {
       </div>
       <SearchPopup
         isOpen={isPopupOpen}
+        closePopup={closePopup}
         query={query}
+        setQuery={setQuery}
         handleChange={handleChange}
         posts={posts}
       />
