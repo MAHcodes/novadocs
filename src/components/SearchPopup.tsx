@@ -1,7 +1,22 @@
-import { useEffect, useState } from "preact/hooks";
-import { FaBeer } from "react-icons/fa";
+import { useEffect, useRef, useState } from "preact/hooks";
 
-export default function Popup({ isOpen, query, handleChange, posts }: any) {
+export default function Popup({
+  isOpen,
+  closePopup,
+  query,
+  setQuery,
+  handleChange,
+  posts,
+}: any) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    } else {
+      setQuery("");
+    }
+  }, [isOpen, setQuery]);
+
   if (!isOpen) {
     return null;
   }
@@ -72,6 +87,7 @@ export default function Popup({ isOpen, query, handleChange, posts }: any) {
     >
       <div class="relative bg-white rounded-t shadow-lg p-5">
         <input
+          ref={inputRef}
           type="text"
           placeholder="Type to search..."
           className="outline-none p-2 w-full border-b border-gray-300"
@@ -108,6 +124,7 @@ export default function Popup({ isOpen, query, handleChange, posts }: any) {
                     <div>
                       <h3 className={""}>
                         <a
+                          onClick={closePopup}
                           className={
                             "flex gap-2 mx-3 p-4 border-l-2 border-gray-300 hover:bg-gray-200"
                           }
@@ -133,6 +150,7 @@ export default function Popup({ isOpen, query, handleChange, posts }: any) {
                       {section.paragraphs.map((paragraph: any, index: any) => (
                         <p className={"w-full"} key={index}>
                           <a
+                            onClick={closePopup}
                             className={
                               "flex gap-2 mx-3 p-4 border-l-2 w-full border-gray-300 hover:bg-gray-200"
                             }
