@@ -1,17 +1,70 @@
 ---
 import { SITE } from "../consts";
 import { Icon } from "astro-icon";
+import Search from "./Search";
+import LightningButton from "./LightningButton.astro";
+import ThemeToggleButton from "./ThemeToggleButton.astro";
+import { getCollection } from "astro:content";
 
 type Props = {
   currentPage: string;
 };
+
+const docs = await getCollection("docs", ({ id }) => {
+  return !id.endsWith("index.md");
+});
+
+function parseMarkdown(doc: any) {
+  const markdownContent = doc.body;
+  const title = doc.data.title;
+  const slug = doc.slug;
+
+  // Split by line
+  let lines = markdownContent.split("\n");
+
+  let parsedContent = [];
+  let currentHeader = null;
+
+  for (let line of lines) {
+    // Check if line is a header
+    if (line.startsWith("#")) {
+      // Start new header
+      currentHeader = line.replace(/#/g, "").trim();
+    }
+
+    // Else, it's a paragraph. Add it to parsedContent with the currentHeader
+    else if (line.trim().length > 0) {
+      if (line.trim().startsWith("```")) {
+        continue;
+      }
+      // ignore empty lines
+      parsedContent.push({
+        title,
+        header: currentHeader,
+        paragraph: line.trim(),
+        slug,
+      });
+    }
+  }
+
+  return parsedContent;
+}
+
+const parsed_markdown = docs.map((doc) => {
+  return parseMarkdown(doc);
+});
+
+// console.log(parsed_markdown);
 ---
 
 <header class="max-w-8xl mx-auto">
   <div
-    class="py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0"
+    class="py-4 border-b border-gray-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0"
   >
-    <nav class="relative flex items-center" title="Top Navigation">
+    <nav
+      class="relative flex justify-between items-center"
+      title="Top Navigation"
+    >
       <a
         class="mr-3 flex flex-row gap-2 w-[2.0625rem] overflow-hidden md:w-auto text-xl"
         href="/"
@@ -19,7 +72,15 @@ type Props = {
         <Icon class="w-8 h-8 cursor-pointer" name={"ph:planet-fill"} />
         <h1>{SITE.title ?? "Documentation"}</h1>
       </a>
+
       <Icon class="w-8 h-8 cursor-pointer lg:hidden" name={"mdi:menu"} />
+      <div class="flex flex-row gap-6">
+        <ThemeToggleButton />
+        <Search client:load searchList={parsed_markdown.flat()}>
+          <Icon className="w-5 h-5 mr-1" name="mdi:search" />
+        </Search>
+        <LightningButton />
+      </div>
     </nav>
   </div>
 </header>

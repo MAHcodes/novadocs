@@ -21,12 +21,12 @@ const currentFile = `src/content/docs${currentPage.replace(/\/$/, "")}.md`;
 const githubEditUrl = `${GITHUB_EDIT_URL}/${currentFile}`;
 ---
 
-<html dir={"asdf"} lang={"en"} class="initial">
+<html dir={"ltr"} lang={"en"} class="initial">
   <head>
     <!-- <HeadCommon /> -->
     <!-- <HeadSEO {...data} canonicalUrl={canonicalURL} /> -->
     <title>
-      {`${data.title} 🚀 asdf`}
+      {`${data.title} | ${SITE.title}`}
     </title>
   </head>
 
@@ -36,7 +36,7 @@ const githubEditUrl = `${GITHUB_EDIT_URL}/${currentFile}`;
     >
       <Header currentPage={currentPage} />
     </div>
-    <main class="flex">
+    <main class="flex mb-48">
       <div class="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
         <aside
           class="hidden lg:block fixed z-20 inset-0 top-[3.8125rem] left-[max(0px,calc(50%-45rem))] right-auto w-[19.5rem] pb-10 px-8 overflow-y-auto"
@@ -47,7 +47,8 @@ const githubEditUrl = `${GITHUB_EDIT_URL}/${currentFile}`;
           <div
             class="max-w-3xl mx-auto pt-10 xl:max-w-none xl:ml-0 xl:mr-[15.5rem] xl:pr-16"
           >
-            <article class="prose prose-lg mb-96">
+            <article class="prose prose-lg prose-h2:pt-20 prose-h2:mt-[-5rem] mb-8">
+            <!-- <article class="prose prose-lg mb-96"> -->
               <slot />
             </article>
             <aside
@@ -68,5 +69,10 @@ const githubEditUrl = `${GITHUB_EDIT_URL}/${currentFile}`;
     :root {
       scroll-behavior: smooth;
     }
+  }
+  .prose h1,
+  .prose h2,
+  .prose h3 {
+    @apply pt-16 mt-[-64px];
   }
 </style>

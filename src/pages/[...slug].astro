@@ -1,9 +1,11 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content";
 import MainLayout from "../layouts/MainLayout.astro";
+import Pagination from "../components/Pagination.astro";
 
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
+  // console.log(docs.map((entry) => entry.body));
   return docs.map((entry) => ({
     params: {
       slug: entry.slug,
@@ -15,12 +17,9 @@ type Props = CollectionEntry<"docs">;
 
 const post = Astro.props;
 const { Content, headings } = await post.render();
-
-// headings[0].slug = "overview";
-console.log("headings", headings);
-
 ---
 
 <MainLayout headings={headings} {...post.data}>
   <Content />
+  <Pagination />
 </MainLayout>
