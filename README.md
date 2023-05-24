@@ -20,4 +20,5 @@ All commands are run from the root of the project, from a terminal:
 - search 
 - lightning button
 - pagination
+- break up markdown into json object to search over
 

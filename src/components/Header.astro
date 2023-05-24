@@ -10,7 +10,51 @@ type Props = {
   currentPage: string;
 };
 
-const docs = await getCollection("docs");
+const docs = await getCollection("docs", ({ id }) => {
+  return !id.endsWith("index.md");
+});
+
+function parseMarkdown(doc: any) {
+  const markdownContent = doc.body;
+  const title = doc.data.title;
+  const slug = doc.slug;
+
+  // Split by line
+  let lines = markdownContent.split("\n");
+
+  let parsedContent = [];
+  let currentHeader = null;
+
+  for (let line of lines) {
+    // Check if line is a header
+    if (line.startsWith("#")) {
+      // Start new header
+      currentHeader = line.replace(/#/g, "").trim();
+    }
+
+    // Else, it's a paragraph. Add it to parsedContent with the currentHeader
+    else if (line.trim().length > 0) {
+      if (line.trim().startsWith("```")) {
+        continue;
+      }
+      // ignore empty lines
+      parsedContent.push({
+        title,
+        header: currentHeader,
+        paragraph: line.trim(),
+        slug,
+      });
+    }
+  }
+
+  return parsedContent;
+}
+
+const parsed_markdown = docs.map((doc) => {
+  return parseMarkdown(doc);
+});
+
+// console.log(parsed_markdown);
 ---
 
 <header class="max-w-8xl mx-auto">
@@ -32,7 +76,7 @@ const docs = await getCollection("docs");
       <Icon class="w-8 h-8 cursor-pointer lg:hidden" name={"mdi:menu"} />
       <div class="flex flex-row gap-6">
         <ThemeToggleButton />
-        <Search client:only={"preact"} searchList={docs}>
+        <Search client:load searchList={parsed_markdown.flat()}>
           <Icon className="w-5 h-5 mr-1" name="mdi:search" />
         </Search>
         <LightningButton />
