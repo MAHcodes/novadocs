@@ -94,12 +94,12 @@ export default function Popup({
           value={query}
           onInput={handleChange}
         />
-        <div className="absolute top-full left-0 bg-white w-full p-5 rounded-b-md overflow-y-auto max-h-96">
+        <div className="absolute top-full left-0 bg-white w-full px-5 rounded-b-md overflow-y-auto max-h-96">
           <ul>
             {transformedContent &&
               transformedContent.map((content: any) => (
                 <li key={content.slug}>
-                  <h2 className={"font-bold pb-4"}>
+                  <h2 className={"font-bold pt-4 pb-2"}>
                     <a className={"flex gap-2"} href={`/${content.slug}`}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

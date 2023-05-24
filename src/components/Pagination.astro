@@ -1,18 +1,28 @@
 ---
-// const { page } = Astro.props;
+const { prev, next } = Astro.props;
+console.log("next", next);
 ---
 
 <div class="mt-24 flex justify-between">
-  <a
-    class="text-gray-800 no-underline rounded-xl border-2 border-gray-800 text-sm px-4 py-2 mr-auto"
-    href={"/#"}
-  >
-    Prev</a
-  >
-  <a
-    class="text-gray-800 no-underline rounded-xl border-2 border-gray-800 text-sm px-4 py-2 ml-auto"
-    href={"/#"}
-  >
-    Next</a
-  >
+  {
+    prev && (
+      <a
+        class="text-gray-800 no-underline rounded-xl border-2 border-gray-800 text-sm px-4 py-2 mr-auto"
+        href={`/${prev.slug}`}
+      >
+        Prev
+        {prev.data.title}
+      </a>
+    )
+  }
+  {
+    next && (
+      <a
+        class="text-gray-800 no-underline rounded-xl border-2 border-gray-800 text-sm px-4 py-2 ml-auto"
+        href={`/${next.slug}`}
+      >
+        Next
+      </a>
+    )
+  }
 </div>

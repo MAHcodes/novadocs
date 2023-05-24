@@ -10,7 +10,7 @@ export default function Search(props: any) {
     distance: 100000,
     includeMatches: true,
     minMatchCharLength: 2,
-    threshold: 0,
+    threshold: 0.1,
     // ignoreLocation: true,
   };
   const fuse = new Fuse(props.searchList, options);
@@ -27,7 +27,7 @@ export default function Search(props: any) {
   };
 
   useEffect(() => {
-    const posts = fuse
+    const posts: any = fuse
       .search(query)
       // .map((result) => result.item)
       .slice(0, 30);
@@ -44,7 +44,6 @@ export default function Search(props: any) {
     document.body.style.overflow = "auto";
     setIsPopupOpen(false);
   };
-
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -53,9 +52,20 @@ export default function Search(props: any) {
         closePopup();
       }
     };
+
+    const handleSlash = (event: KeyboardEvent) => {
+      if (event.key === "/") {
+        event.preventDefault();
+        openPopup();
+      }
+    };
+
     window.addEventListener("keydown", handleEsc);
+    window.addEventListener("keydown", handleSlash);
+
     return () => {
       window.removeEventListener("keydown", handleEsc);
+      window.removeEventListener("keydown", handleSlash);
     };
   }, []);
 
