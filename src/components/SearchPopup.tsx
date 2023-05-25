@@ -95,6 +95,12 @@ export default function Popup({
           onInput={handleChange}
         />
         <div className="absolute top-full left-0 bg-white w-full px-5 rounded-b-md overflow-y-auto max-h-96">
+          {!query && (
+            <div className="px-4 pt-4 pb-12 flex justify-center items-center">
+              <h2 className="text-lg text-gray-500">No Recent Searches</h2>
+            </div>
+          )}
+
           <ul>
             {transformedContent &&
               transformedContent.map((content: any) => (

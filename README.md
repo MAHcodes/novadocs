@@ -21,8 +21,11 @@ All commands are run from the root of the project, from a terminal:
 - light and dark mode
 
 
+- arrow keys move through search
 - support files outside directories
 - support drafts
 - support multiple languages
+- edit this page button needs context for current page
+- Esc key in search dropdown
 
 - fuzzy match for searches
