@@ -27,7 +27,23 @@ export default function Popup({
     return contentArray.reduce((newArray: any, post: any) => {
       // const matches = post.matches;
       // can get key with paragraph, header, or title and add it to the object
-      console.log("matches", post.matches);
+      // console.log("post", post);
+      console.log("matches", post.item);
+
+      post.matches.forEach((match: any) => {
+        match.indices.forEach((index: any) => {
+          const chars = post.item[match.key].split("");
+          chars[index[0]] = "<mark>" + chars[index[0]];
+          chars[index[1]] = chars[index[1]] + "</mark>";
+
+          if (!post.item.hasOwnProperty("highlight")) {
+            post.item.highlight = {};
+          }
+
+          post.item.highlight[match.key] = chars.join("");
+        });
+      });
+
       // const score = post.score;
       // const refIndex = post.refIndex;
       // Try to find an existing object with the same title
@@ -48,17 +64,22 @@ export default function Popup({
           existingObj.content.push({
             header: item.header,
             paragraphs: [item.paragraph],
+            highlight: item.highlight,
           });
         }
       } else {
         // If no object with the same title exists, create a new one
         newArray.push({
           title: item.title,
+          highlight: {
+            title: item.highlight.title,
+          },
           slug: item.slug,
           content: [
             {
               header: item.header,
               paragraphs: [item.paragraph],
+              highlight: item.highlight,
             },
           ],
         });
@@ -116,8 +137,15 @@ export default function Popup({
                           d="M8 12h8v2H8zm0 4h8v2H8zm0-8h2v2H8z"
                         />
                       </svg>
-
-                      {content.title}
+                      {content.highlight.title ? (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: content.highlight.title,
+                          }}
+                        />
+                      ) : (
+                        content.title
+                      )}
                     </a>
                   </h2>
                   {content.content.map((section: any) => (
@@ -144,7 +172,15 @@ export default function Popup({
                               d="m5.41 21l.71-4h-4l.35-2h4l1.06-6h-4l.35-2h4l.71-4h2l-.71 4h6l.71-4h2l-.71 4h4l-.35 2h-4l-1.06 6h4l-.35 2h-4l-.71 4h-2l.71-4h-6l-.71 4h-2M9.53 9l-1.06 6h6l1.06-6h-6Z"
                             />
                           </svg>
-                          {section.header}
+                          {section.highlight.header ? (
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: section.highlight.header,
+                              }}
+                            />
+                          ) : (
+                            section.header
+                          )}
                         </a>
                       </h3>
                       {section.paragraphs.map((paragraph: any, index: any) => (
