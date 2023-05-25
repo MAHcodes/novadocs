@@ -70,17 +70,40 @@ const parsed_markdown = docs.map((doc) => {
         href="/"
       >
         <Icon class="w-8 h-8 cursor-pointer" name={"ph:planet-fill"} />
-        <h1>{SITE.title ?? "Documentation"}</h1>
+        <h1 class="hidden lg:block">{SITE.title ?? "Documentation"}</h1>
       </a>
 
-      <Icon class="w-8 h-8 cursor-pointer lg:hidden" name={"mdi:menu"} />
+      <!-- <Icon class="w-8 h-8 cursor-pointer lg:hidden" name={"mdi:menu"} /> -->
       <div class="flex flex-row gap-6">
-        <ThemeToggleButton />
         <Search client:load searchList={parsed_markdown.flat()}>
           <Icon className="w-5 h-5 mr-1" name="mdi:search" />
         </Search>
-        <LightningButton />
+        <ThemeToggleButton />
+        <a class="flex justify-between items-center" href="#">
+          <svg
+            class="w-8 h-8"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            class="icon-bolt"
+            ><circle cx="12" cy="12" r="10" class="primary"></circle><path
+              class="secondary"
+              d="M14 10h2a1 1 0 0 1 .81 1.58l-5 7A1 1 0 0 1 10 18v-4H8a1 1 0 0 1-.81-1.58l5-7A1 1 0 0 1 14 6v4z"
+            ></path></svg
+          >
+        </a>
+        <!-- <LightningButton /> -->
       </div>
     </nav>
   </div>
 </header>
+
+<style>
+  .primary {
+    fill: #fbbf24;
+  }
+
+  .secondary {
+    fill: #fff;
+  }
+
+</style>

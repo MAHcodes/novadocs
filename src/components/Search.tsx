@@ -73,7 +73,7 @@ export default function Search(props: any) {
     <div>
       <div
         onClick={openPopup}
-        className="py-1 px-2 border cursor-pointer hover:border-gray-900 border-gray-400 flex flex-row justify-between gap-2 items-center rounded-full"
+        className="py-1 px-2 border cursor-pointer hover:border-gray-900 border-gray-400 lg:flex flex-row justify-between gap-2 items-center rounded-full hidden"
       >
         <div className="flex flex-row items-center">
           {props.children}
@@ -82,6 +82,9 @@ export default function Search(props: any) {
         <span className="inset-x-3/4 p-1 select-none items-center justify-center text-xs font-mono tracking-wide leading-3 pointer-events-none border border-gray-400 rounded-sm mr-2">
           <kbd aria-hidden="true">/</kbd>
         </span>
+      </div>
+      <div onClick={openPopup} className={"lg:hidden cursor-pointer flex justify-between items-center"}>
+        {props.children}
       </div>
       <SearchPopup
         isOpen={isPopupOpen}

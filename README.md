@@ -15,10 +15,14 @@ All commands are run from the root of the project, from a terminal:
 
 ## TODO
 
+- mobile design
+- search should have drop down show "No Recent Searches"
+- lightning button
+- light and dark mode
+
+
+- support files outside directories
 - support drafts
 - support multiple languages
-- search 
-- lightning button
-- pagination
-- break up markdown into json object to search over
 
+- fuzzy match for searches
