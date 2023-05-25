@@ -43,11 +43,12 @@ const githubEditUrl = `${GITHUB_EDIT_URL}/${currentFile}`;
         >
           <LeftSidebar currentPage={currentPage} />
         </aside>
-        <div class="lg:pl-[19.5rem]">
+        <div class="lg:pl-[19.5rem] md:max-w-none sm:max-w-xl max-w-sm">
           <div
             class="max-w-3xl mx-auto pt-10 xl:max-w-none xl:ml-0 xl:mr-[15.5rem] xl:pr-16"
           >
-            <article class="prose prose-lg prose-h2:pt-20 prose-h2:mt-[-5rem] mb-8 min-w-[46rem]">
+            <!-- <article class="prose prose-sm prose-h2:pt-20 prose-h2:mt-[-5rem] mb-8 max-w-3xl"> -->
+            <article class="prose prose-h2:pt-20 prose-h2:mt-[-5rem] mb-8 xl:min-w-[30rem]">
             <!-- <article class="prose prose-lg mb-96"> -->
               <slot />
             </article>
@@ -69,10 +70,5 @@ const githubEditUrl = `${GITHUB_EDIT_URL}/${currentFile}`;
     :root {
       scroll-behavior: smooth;
     }
-  }
-  .prose h1,
-  .prose h2,
-  .prose h3 {
-    @apply pt-16 mt-[-64px];
   }
 </style>

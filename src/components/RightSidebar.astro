@@ -10,7 +10,7 @@ const { content, githubEditUrl, headings } = Astro.props;
   {
     headings && (
       <TableOfContents
-        client:media="(min-width: 50em)"
+        // client:media="(min-width: 50em)"
         toc={generateToc(headings, "Overview")}
         labels={{ onThisPage: "On this page" }}
       />
