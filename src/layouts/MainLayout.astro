@@ -31,37 +31,43 @@ const githubEditUrl = `${GITHUB_EDIT_URL}/${currentFile}`;
   </head>
 
   <body class="antialiased">
-    <div
-      class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent"
-    >
-      <Header currentPage={currentPage} />
-    </div>
-    <main class="flex mb-48">
-      <div class="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
-        <aside
-          class="hidden lg:block fixed z-20 inset-0 top-[3.8125rem] left-[max(0px,calc(50%-45rem))] right-auto w-[19.5rem] pb-10 px-8 overflow-y-auto"
-        >
-          <LeftSidebar currentPage={currentPage} />
-        </aside>
-        <div class="lg:pl-[19.5rem] md:max-w-none sm:max-w-xl max-w-sm">
-          <div
-            class="max-w-3xl mx-auto pt-10 xl:max-w-none xl:ml-0 xl:mr-[15.5rem] xl:pr-16"
+    <div>
+      <div
+        class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent"
+      >
+        <Header currentPage={currentPage} />
+      </div>
+      <div class="mb-48 overflow-hidden">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+          <aside
+            class="hidden lg:block fixed z-20 inset-0 top-[3.8125rem] left-[max(0px,calc(50%-45rem))] right-auto w-[19.5rem] pb-10 px-8 overflow-y-auto"
           >
-            <!-- <article class="prose prose-sm prose-h2:pt-20 prose-h2:mt-[-5rem] mb-8 max-w-3xl"> -->
-            <article class="prose prose-h2:pt-20 prose-h2:mt-[-5rem] mb-8 xl:min-w-[30rem]">
-            <!-- <article class="prose prose-lg mb-96"> -->
-              <slot />
-            </article>
-            <aside
-              class="fixed z-20 top-[3.8125rem] bottom-0 right-[max(0px,calc(50%-45rem))] w-[19.5rem] py-10 overflow-y-auto hidden xl:block"
+            <LeftSidebar currentPage={currentPage} />
+          </aside>
+          <div class="lg:pl-[19.5rem]">
+            <main
+              class="max-w-3xl mx-auto pt-10 xl:max-w-none"
             >
-              <RightSidebar headings={headings} />
-            </aside>
+              <!-- <article class="prose prose-sm prose-h2:pt-20 prose-h2:mt-[-5rem] mb-8 max-w-3xl"> -->
+              <section class="relative">
+                <article
+                  class="mb-10 max-w-2xl prose prose-slate xl:mb-0 dark:prose-dark"
+                >
+                  <!-- <article class="prose prose-lg mb-96"> -->
+                  <slot />
+                </article>
+              </section>
+              <aside
+                class="fixed z-20 top-[3.8125rem] bottom-0 right-[max(0px,calc(50%-45rem))] w-[19.5rem] py-10 overflow-y-auto hidden xl:block"
+              >
+                <RightSidebar headings={headings} />
+              </aside>
+            </main>
+            <!-- <Footer path={currentFile} /> -->
           </div>
-          <!-- <Footer path={currentFile} /> -->
         </div>
       </div>
-    </main>
+    </div>
   </body>
 </html>
 
